@@ -20,14 +20,15 @@ public class Publication implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idPub;
-    private Integer nbrcomment=0;
+    @Lob
+    private String image;
     @ToString.Include
     private String content;
+    private Integer nbrcomment=0;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ToString.Include
     private LocalDate pubDate;
     @Enumerated(EnumType.STRING)
-
     private TypePublication typePublication;
     //Relation ManyToMany user-Publication
     @JsonIgnore
