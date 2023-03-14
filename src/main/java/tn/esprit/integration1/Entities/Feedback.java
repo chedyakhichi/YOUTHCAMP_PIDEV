@@ -1,7 +1,6 @@
-package tn.esprit.integration1.Entities;//package com.example.ahmed.Entity;
+package tn.esprit.integration1.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,16 +18,16 @@ public class Feedback implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idFeedback;
     @Enumerated(EnumType.STRING)
-    private Subject Sub;
+    private  Subject Sub;
     private String Description;
     // @Temporal(TemporalType.DATE)
     private LocalDate dateFeedback;
-
-    @JsonIgnore
-    private Integer nbrw;
     @JsonIgnore
     @ManyToOne
     User user;
+    @JsonIgnore
+
+    private Integer nbrw;
 
 
 
