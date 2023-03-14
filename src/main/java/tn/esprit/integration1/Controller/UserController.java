@@ -25,6 +25,18 @@ public class UserController {
         User user = userService.registerUser(u);
         return user;
     }
+    @PutMapping("/assi/{center-id}/{user-id}")
+    public void AffecterUserCenter (@PathVariable("center-id") Integer idC , @PathVariable("user-id") Integer idU)
+    {
+        userService.assignUserToCenter(idU,idC);
 
+    }
+
+    @PutMapping("/affect/{userid}/{reservationid}")
+    public void AffecterUserReservation (@PathVariable Integer userid,@PathVariable Integer reservationid )
+    {   System.out.println("Hello -- i'm here");
+        userService.assignUserToReservation(userid, reservationid);
+
+    }
 
 }
