@@ -13,4 +13,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findAllByLoyaltyPointsExpireDateBefore(LocalDate expirationDate);
     @Query(" Select u from User u where (u.adress_livraison= :adress) and (u.role= :role ) ")
     public User  finduser (@Param("adress") String adress, @Param("role") Role role);
+///othman
+
+
+
 }

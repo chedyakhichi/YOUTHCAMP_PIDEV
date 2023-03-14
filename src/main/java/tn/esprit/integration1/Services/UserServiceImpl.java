@@ -2,16 +2,15 @@ package tn.esprit.integration1.Services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import tn.esprit.integration1.Entities.Center;
 import tn.esprit.integration1.Entities.Publication;
 import tn.esprit.integration1.Entities.Reservation;
 import tn.esprit.integration1.Entities.User;
 import tn.esprit.integration1.Interfaces.IUserService;
-import tn.esprit.integration1.Repositories.CenterRepository;
-import tn.esprit.integration1.Repositories.PublicationRepository;
-import tn.esprit.integration1.Repositories.ReservationRepository;
-import tn.esprit.integration1.Repositories.UserRepository;
+import tn.esprit.integration1.Repositories.*;
 
 
 @Service
@@ -24,6 +23,10 @@ public class UserServiceImpl implements IUserService {
     CenterRepository Cr;
     @Autowired
     ReservationRepository Rr;
+    @Autowired
+    CommandRepository commandRepository;
+    @Autowired
+    private JavaMailSender mailSender; // Autowired mail sender for sending emails
 
     @Override
     public User registerUser(User user) {
@@ -58,5 +61,19 @@ public class UserServiceImpl implements IUserService {
         U.getReservations().add(R);
         userRepository.save(U);
     }
+    public void sendLoyaltyPointsReminder(User user) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("Reminder: Your Loyalty Points are Expiring Soon!");
+        message.setText("Dear " + user.getFirstname() + ",\n\n" +
+                "This is a reminder that your loyalty points are expiring soon. You currently have " +
+                user.getLoyaltyPts() + " points, which will expire on " + user.getLoyaltyPointsExpireDate() +
+                ". Don't forget to use them before they expire!\n\n" +
+                "Thank you for being a loyal customer of our online store.\n" +
+                "Best regards,\n" +
+                "The Store Team");
+        mailSender.send(message);
+    }
+
 }
 
